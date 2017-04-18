@@ -1,15 +1,13 @@
 package com.oreilly.rxjava.ch3;
 
-import com.oreilly.rxjava.util.Sleeper;
-import org.apache.commons.lang3.RandomUtils;
-import org.apache.commons.lang3.tuple.Pair;
-import org.junit.Ignore;
-import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import rx.Observable;
-import rx.functions.Func1;
-import twitter4j.Status;
+import static com.oreilly.rxjava.ch3.Sound.DAH;
+import static com.oreilly.rxjava.ch3.Sound.DI;
+import static java.util.concurrent.TimeUnit.MILLISECONDS;
+import static java.util.concurrent.TimeUnit.SECONDS;
+import static rx.Observable.empty;
+import static rx.Observable.interval;
+import static rx.Observable.just;
+import static rx.Observable.timer;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -17,15 +15,27 @@ import java.time.DayOfWeek;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+import java.util.Random;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.LongAdder;
 
-import static com.oreilly.rxjava.ch3.Sound.DAH;
-import static com.oreilly.rxjava.ch3.Sound.DI;
-import static java.util.concurrent.TimeUnit.MILLISECONDS;
-import static java.util.concurrent.TimeUnit.SECONDS;
-import static rx.Observable.*;
+import org.apache.commons.lang3.RandomUtils;
+import org.apache.commons.lang3.tuple.Pair;
+import org.junit.Ignore;
+import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.oreilly.rxjava.util.Sleeper;
+
+import rx.Observable;
+import rx.functions.Func1;
+import twitter4j.Status;
 
 @Ignore
 public class Chapter3 {
@@ -276,8 +286,11 @@ public class Chapter3 {
 	public void sample_249() throws Exception {
 		Observable
 				.just(DayOfWeek.SUNDAY, DayOfWeek.MONDAY)
-				.concatMap(this::loadRecordsFor);
+				//.flatMap(this::loadRecordsFor)
+				.concatMap(this::loadRecordsFor)
+				.subscribe(System.out::println);
 
+		SECONDS.sleep(5);
 	}
 
 	@Test
@@ -343,6 +356,7 @@ public class Chapter3 {
 				green.timestamp(),
 				(r, g) -> r.getTimestampMillis() - g.getTimestampMillis()
 		).forEach(System.out::println);
+		Sleeper.sleep(Duration.ofSeconds(2));
 	}
 
 	@Test
@@ -365,6 +379,7 @@ public class Chapter3 {
 		slow
 				.withLatestFrom(fast, (s, f) -> s + ":" + f)
 				.forEach(System.out::println);
+		Sleeper.sleep(Duration.ofSeconds(2));
 	}
 
 	@Test
@@ -391,6 +406,7 @@ public class Chapter3 {
 				stream(100, 17, "S"),
 				stream(200, 10, "F")
 		).subscribe(log::info);
+		Sleeper.sleep(Duration.ofSeconds(2));
 	}
 
 	@Test
@@ -398,6 +414,7 @@ public class Chapter3 {
 		stream(100, 17, "S")
 				.ambWith(stream(200, 10, "F"))
 				.subscribe(log::info);
+		Sleeper.sleep(Duration.ofSeconds(2));
 	}
 
 	@Test
@@ -406,7 +423,7 @@ public class Chapter3 {
 		Observable<Long> progress = transferFile();
 
 		LongAdder total = new LongAdder();
-		progress.subscribe(total::add);
+		progress.doOnNext(v -> System.out.println(total)).subscribe(total::add);
 		Sleeper.sleep(Duration.ofSeconds(10));
 	}
 
@@ -435,6 +452,7 @@ public class Chapter3 {
 				.range(2, 100)
 				.scan(BigInteger.ONE, (big, cur) ->
 						big.multiply(BigInteger.valueOf(cur)));
+		factorials.subscribe(System.out::println);
 	}
 
 	@Test

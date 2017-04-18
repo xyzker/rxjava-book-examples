@@ -1,12 +1,7 @@
 package com.oreilly.rxjava.ch4;
 
-import org.apache.commons.lang3.tuple.Pair;
-import org.junit.Ignore;
-import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import rx.Observable;
-import rx.schedulers.Schedulers;
+import static java.util.stream.Collectors.toList;
+import static rx.Observable.fromCallable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,8 +12,14 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
-import static java.util.stream.Collectors.toList;
-import static rx.Observable.fromCallable;
+import org.apache.commons.lang3.tuple.Pair;
+import org.junit.Ignore;
+import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import rx.Observable;
+import rx.schedulers.Schedulers;
 
 @Ignore
 public class Flights {
@@ -199,6 +200,11 @@ public class Flights {
 								.subscribeOn(Schedulers.io()));
 	}
 
-
+/*
+	@Test
+	public void test() throws Exception{
+		Socket client=new Socket(InetAddress.getLocalHost(), 8888);
+	}
+*/
 
 }

@@ -20,4 +20,5 @@ class JmsConsumer {
         return subject;
     }
 
+
 }
