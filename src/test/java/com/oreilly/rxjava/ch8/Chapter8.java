@@ -1,5 +1,29 @@
 package com.oreilly.rxjava.ch8;
 
+import static com.oreilly.rxjava.ch8.GeoNames.log;
+import static java.time.Month.APRIL;
+import static java.util.concurrent.TimeUnit.MICROSECONDS;
+import static java.util.stream.Collectors.toList;
+
+import java.math.BigDecimal;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.Month;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
+
+import org.apache.camel.CamelContext;
+import org.apache.camel.Message;
+import org.apache.camel.impl.DefaultCamelContext;
+import org.apache.camel.rx.ReactiveCamel;
+import org.bson.Document;
+import org.junit.Ignore;
+import org.junit.Test;
+
 import com.couchbase.client.java.CouchbaseAsyncCluster;
 import com.couchbase.client.java.document.AbstractDocument;
 import com.couchbase.client.java.document.json.JsonArray;
@@ -8,26 +32,8 @@ import com.mongodb.client.model.Projections;
 import com.mongodb.rx.client.MongoClients;
 import com.mongodb.rx.client.MongoCollection;
 import com.mongodb.rx.client.MongoDatabase;
-import org.apache.camel.CamelContext;
-import org.apache.camel.Message;
-import org.apache.camel.impl.DefaultCamelContext;
-import org.apache.camel.rx.ReactiveCamel;
-import org.bson.Document;
-import org.junit.Ignore;
-import org.junit.Test;
+
 import rx.Observable;
-
-import java.math.BigDecimal;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.Month;
-import java.util.*;
-import java.util.concurrent.TimeUnit;
-
-import static com.oreilly.rxjava.ch8.GeoNames.log;
-import static java.time.Month.APRIL;
-import static java.util.concurrent.TimeUnit.MICROSECONDS;
-import static java.util.stream.Collectors.toList;
 
 
 @Ignore

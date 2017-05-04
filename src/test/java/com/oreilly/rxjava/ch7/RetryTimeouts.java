@@ -1,14 +1,15 @@
 package com.oreilly.rxjava.ch7;
 
+import static java.util.concurrent.TimeUnit.SECONDS;
+
+import java.util.concurrent.TimeoutException;
+
 import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import rx.Observable;
-
-import java.util.concurrent.TimeoutException;
-
-import static java.util.concurrent.TimeUnit.SECONDS;
 
 @Ignore
 public class RetryTimeouts {

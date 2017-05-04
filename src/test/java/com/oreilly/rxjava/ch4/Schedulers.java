@@ -1,21 +1,25 @@
 package com.oreilly.rxjava.ch4;
 
-import com.google.common.util.concurrent.ThreadFactoryBuilder;
+import static java.util.concurrent.Executors.newFixedThreadPool;
+import static java.util.concurrent.TimeUnit.SECONDS;
+
+import java.math.BigDecimal;
+import java.time.Duration;
+import java.util.UUID;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.ThreadFactory;
+
 import org.apache.commons.lang3.tuple.Pair;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
+import com.oreilly.rxjava.util.Sleeper;
+
 import rx.Observable;
 import rx.Scheduler;
-
-import java.math.BigDecimal;
-import java.util.UUID;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.ThreadFactory;
-
-import static java.util.concurrent.Executors.newFixedThreadPool;
-import static java.util.concurrent.TimeUnit.SECONDS;
 
 @Ignore
 public class Schedulers {
@@ -129,9 +133,13 @@ public class Schedulers {
 		Observable<BigDecimal> totalPrice = Observable
 				.just("bread", "butter", "milk", "tomato", "cheese")
 				.subscribeOn(schedulerA)  //BROKEN!!!
+				//.subscribeOn(rx.schedulers.Schedulers.io())
 				.map(prod -> rxGroceries.doPurchase(prod, 1))
 				.reduce(BigDecimal::add)
 				.single();
+
+		totalPrice.subscribe(System.out::println);
+		Sleeper.sleep(Duration.ofSeconds(30));
 	}
 
 	@Test
@@ -142,6 +150,9 @@ public class Schedulers {
 				.flatMap(prod -> rxGroceries.purchase(prod, 1))
 				.reduce(BigDecimal::add)
 				.single();
+
+		totalPrice.subscribe(System.out::println);
+		Sleeper.sleep(Duration.ofSeconds(30));
 	}
 
 	@Test
@@ -154,6 +165,10 @@ public class Schedulers {
 								.subscribeOn(schedulerA))
 				.reduce(BigDecimal::add)
 				.single();
+
+		totalPrice.subscribe(System.out::println);
+		Sleeper.sleep(Duration.ofSeconds(2));
+
 	}
 
 	@Test
@@ -173,6 +188,9 @@ public class Schedulers {
 						.subscribeOn(schedulerA))
 				.reduce(BigDecimal::add)
 				.single();
+
+		totalPrice.subscribe(System.out::println);
+		Sleeper.sleep(Duration.ofSeconds(2));
 	}
 
 	@Test
@@ -210,6 +228,8 @@ public class Schedulers {
 						() -> log("Completed")
 				);
 		log("Exiting");
+
+		Sleeper.sleep(Duration.ofSeconds(2));
 	}
 
 	@Test
@@ -234,6 +254,8 @@ public class Schedulers {
 						() -> log("Completed")
 				);
 		log("Exiting");
+
+		Sleeper.sleep(Duration.ofSeconds(2));
 	}
 
 	Observable<UUID> store(String s) {
@@ -249,8 +271,11 @@ public class Schedulers {
 	public void sample_248() throws Exception {
 		Observable
 				.just('A', 'B')
-				.delay(1, SECONDS, schedulerA)
+				//.delay(1, SECONDS, schedulerA)
+				.delay(1, SECONDS)
 				.subscribe(this::log);
+
+		Sleeper.sleep(Duration.ofSeconds(2));
 	}
 
 

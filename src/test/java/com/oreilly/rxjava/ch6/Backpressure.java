@@ -1,21 +1,23 @@
 package com.oreilly.rxjava.ch6;
 
-import com.oreilly.rxjava.util.Sleeper;
-import org.apache.commons.dbutils.ResultSetIterator;
-import org.junit.Ignore;
-import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import rx.Observable;
-import rx.Subscriber;
-import rx.observables.SyncOnSubscribe;
-import rx.schedulers.Schedulers;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.Duration;
+
+import org.apache.commons.dbutils.ResultSetIterator;
+import org.junit.Ignore;
+import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.oreilly.rxjava.util.Sleeper;
+
+import rx.Observable;
+import rx.Subscriber;
+import rx.observables.SyncOnSubscribe;
+import rx.schedulers.Schedulers;
 
 @Ignore
 public class Backpressure {
@@ -52,6 +54,8 @@ public class Backpressure {
 					sleepMillis(50);
 				});
 
+		Sleeper.sleep(Duration.ofDays(1));
+
 	}
 
 	private void sleepMillis(int millis) {
@@ -83,6 +87,8 @@ public class Backpressure {
 						},
 						Throwable::printStackTrace
 				);
+
+		Sleeper.sleep(Duration.ofDays(1));
 	}
 
 	@Test
@@ -187,6 +193,8 @@ public class Backpressure {
 					System.out.println("Washing: " + x);
 					sleepMillis(50);
 				});
+
+		Sleeper.sleep(Duration.ofDays(1));
 	}
 
 	@Test

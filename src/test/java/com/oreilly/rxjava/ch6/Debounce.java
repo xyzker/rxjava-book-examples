@@ -1,15 +1,19 @@
 package com.oreilly.rxjava.ch6;
 
-import org.junit.Ignore;
-import org.junit.Test;
-import rx.Observable;
-import rx.observables.ConnectableObservable;
-
-import java.math.BigDecimal;
-
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static rx.Observable.defer;
+
+import java.math.BigDecimal;
+import java.time.Duration;
+
+import org.junit.Ignore;
+import org.junit.Test;
+
+import com.oreilly.rxjava.util.Sleeper;
+
+import rx.Observable;
+import rx.observables.ConnectableObservable;
 
 @Ignore
 public class Debounce {
@@ -29,6 +33,10 @@ public class Debounce {
 							.empty()
 							.delay(goodPrice? 10 : 100, MILLISECONDS);
 				});
+
+		prices.subscribe(System.out::println);
+
+		Sleeper.sleep(Duration.ofDays(1));
 	}
 
 	@Test

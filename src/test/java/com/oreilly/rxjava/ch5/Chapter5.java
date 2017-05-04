@@ -1,15 +1,19 @@
 package com.oreilly.rxjava.ch5;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
+import java.net.URL;
+import java.time.Duration;
+
+import org.junit.Ignore;
+import org.junit.Test;
+
+import com.oreilly.rxjava.util.Sleeper;
+
 import io.netty.buffer.ByteBuf;
 import io.reactivex.netty.protocol.http.client.HttpClient;
 import io.reactivex.netty.protocol.http.client.HttpClientResponse;
-import org.junit.Ignore;
-import org.junit.Test;
 import rx.Observable;
-
-import java.net.URL;
-
-import static java.nio.charset.StandardCharsets.UTF_8;
 
 @Ignore
 public class Chapter5 {
@@ -17,12 +21,14 @@ public class Chapter5 {
 	@Test
 	public void sample_9() throws Exception {
 		Observable<ByteBuf> response = HttpClient
-				.newClient("example.com", 80)
+				.newClient("www.iqiyi.com", 80)
 				.createGet("/")
 				.flatMap(HttpClientResponse::getContent);
 		response
 				.map(bb -> bb.toString(UTF_8))
 				.subscribe(System.out::println);
+
+		Sleeper.sleep(Duration.ofSeconds(2));
 	}
 
 	@Test

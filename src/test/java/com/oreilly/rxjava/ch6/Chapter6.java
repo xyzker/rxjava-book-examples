@@ -1,8 +1,9 @@
 package com.oreilly.rxjava.ch6;
 
-import org.junit.Ignore;
-import org.junit.Test;
-import rx.Observable;
+import static java.util.concurrent.TimeUnit.MILLISECONDS;
+import static java.util.concurrent.TimeUnit.SECONDS;
+import static rx.Observable.empty;
+import static rx.Observable.just;
 
 import java.time.Duration;
 import java.time.LocalTime;
@@ -12,10 +13,12 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-import static java.util.concurrent.TimeUnit.MILLISECONDS;
-import static java.util.concurrent.TimeUnit.SECONDS;
-import static rx.Observable.empty;
-import static rx.Observable.just;
+import org.junit.Ignore;
+import org.junit.Test;
+
+import com.oreilly.rxjava.util.Sleeper;
+
+import rx.Observable;
 
 @Ignore
 public class Chapter6 {
@@ -30,6 +33,8 @@ public class Chapter6 {
 				.map(ts -> ts.getTimestampMillis() - startTime + "ms: " + ts.getValue())
 				.take(5)
 				.subscribe(System.out::println);
+
+		Sleeper.sleep(Duration.ofSeconds(7));
 	}
 
 	@Test
@@ -39,6 +44,8 @@ public class Chapter6 {
 		delayedNames
 				.sample(1, SECONDS)
 				.subscribe(System.out::println);
+
+		Sleeper.sleep(Duration.ofSeconds(7));
 	}
 
 	@Test
@@ -95,6 +102,8 @@ public class Chapter6 {
 		delayedNames
 				.throttleFirst(1, SECONDS)
 				.subscribe(System.out::println);
+
+		Sleeper.sleep(Duration.ofSeconds(7));
 	}
 
 	@Test
@@ -163,6 +172,8 @@ public class Chapter6 {
 		delayedNames
 				.buffer(1, SECONDS)
 				.subscribe(System.out::println);
+
+		Sleeper.sleep(Duration.ofSeconds(7));
 	}
 
 	@Test

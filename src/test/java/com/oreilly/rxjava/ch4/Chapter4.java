@@ -1,21 +1,29 @@
 package com.oreilly.rxjava.ch4;
 
-import com.google.common.util.concurrent.ThreadFactoryBuilder;
-import com.oreilly.rxjava.util.Sleeper;
+import java.time.Duration;
+import java.util.Collections;
+import java.util.List;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+
 import org.apache.commons.lang3.RandomUtils;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
+import com.oreilly.rxjava.util.Sleeper;
+
 import rx.Observable;
 import rx.Scheduler;
 import rx.observables.BlockingObservable;
 import rx.schedulers.Schedulers;
-
-import java.time.Duration;
-import java.util.Collections;
-import java.util.List;
-import java.util.concurrent.*;
 
 
 @Ignore
@@ -174,7 +182,7 @@ public class Chapter4 {
 
 	@Test
 	public void sample_175() throws Exception {
-		Scheduler scheduler = Schedulers.immediate();
+		Scheduler scheduler = Schedulers.trampoline();
 		Scheduler.Worker worker = scheduler.createWorker();
 
 		log("Main start");

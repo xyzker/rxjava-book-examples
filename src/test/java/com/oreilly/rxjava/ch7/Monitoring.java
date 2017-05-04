@@ -1,15 +1,17 @@
 package com.oreilly.rxjava.ch7;
 
+import java.util.concurrent.TimeUnit;
+
+import org.junit.Ignore;
+import org.junit.Test;
+import org.slf4j.LoggerFactory;
+
 import com.codahale.metrics.Counter;
 import com.codahale.metrics.MetricRegistry;
 import com.codahale.metrics.Slf4jReporter;
 import com.codahale.metrics.Timer;
-import org.junit.Ignore;
-import org.junit.Test;
-import org.slf4j.LoggerFactory;
-import rx.Observable;
 
-import java.util.concurrent.TimeUnit;
+import rx.Observable;
 
 @Ignore
 public class Monitoring {
@@ -24,6 +26,7 @@ public class Monitoring {
 				.outputTo(LoggerFactory.getLogger(Monitoring.class))
 				.build();
 		reporter.start(1, TimeUnit.SECONDS);
+
 	}
 
 	@Test

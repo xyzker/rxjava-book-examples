@@ -1,9 +1,27 @@
 package com.oreilly.rxjava.ch7;
 
-import com.google.common.io.Files;
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static java.util.concurrent.TimeUnit.MILLISECONDS;
+import static org.assertj.core.api.AssertionsForClassTypes.failBecauseExceptionWasNotThrown;
+import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.mock;
+import static rx.Notification.Kind.OnError;
+import static rx.Notification.Kind.OnNext;
+import static rx.Observable.fromCallable;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+
+import com.google.common.io.Files;
+
 import rx.Notification;
 import rx.Observable;
 import rx.Scheduler;
@@ -14,22 +32,6 @@ import rx.plugins.RxJavaPlugins;
 import rx.plugins.RxJavaSchedulersHook;
 import rx.schedulers.Schedulers;
 import rx.schedulers.TestScheduler;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.time.LocalDate;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static java.util.concurrent.TimeUnit.MILLISECONDS;
-import static org.assertj.core.api.AssertionsForClassTypes.failBecauseExceptionWasNotThrown;
-import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.mock;
-import static rx.Notification.Kind.OnError;
-import static rx.Notification.Kind.OnNext;
-import static rx.Observable.fromCallable;
 
 @Ignore
 public class Testing {
@@ -222,7 +224,7 @@ public class Testing {
 	public void sample_222() throws Exception {
 		TestSubscriber<Long> ts = new TestSubscriber<>(0);
 
-		naturals1()
+		naturals2()
 				.take(10)
 				.subscribe(ts);
 

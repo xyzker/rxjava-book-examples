@@ -1,11 +1,13 @@
 package com.oreilly.rxjava.ch7;
 
-import org.junit.Ignore;
-import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import rx.Observable;
-import rx.schedulers.TimeInterval;
+import static java.time.Month.AUGUST;
+import static java.time.Month.DECEMBER;
+import static java.time.Month.FEBRUARY;
+import static java.time.Month.JANUARY;
+import static java.time.Month.JULY;
+import static java.time.Month.MARCH;
+import static java.time.Month.SEPTEMBER;
+import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
 import java.math.BigInteger;
 import java.time.Duration;
@@ -14,8 +16,15 @@ import java.time.LocalDate;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
-import static java.time.Month.*;
-import static java.util.concurrent.TimeUnit.MILLISECONDS;
+import org.junit.Ignore;
+import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.oreilly.rxjava.util.Sleeper;
+
+import rx.Observable;
+import rx.schedulers.TimeInterval;
 
 @Ignore
 public class Chapter7 {
@@ -220,7 +229,7 @@ public class Chapter7 {
 	@Test
 	public void sample_215() throws Exception {
 		confirmation()
-				.timeout(210, MILLISECONDS)
+				.timeout(190, MILLISECONDS)
 				.forEach(
 						System.out::println,
 						th -> {
@@ -231,6 +240,8 @@ public class Chapter7 {
 							}
 						}
 				);
+
+		Sleeper.sleep(Duration.ofDays(1));
 	}
 
 	Observable<LocalDate> nextSolarEclipse(LocalDate after) {
@@ -265,6 +276,8 @@ public class Chapter7 {
 		Observable<TimeInterval<LocalDate>> intervals =
 				nextSolarEclipse(LocalDate.of(2016, JANUARY, 1))
 						.timeInterval();
+		intervals.subscribe(System.out::println);
+		Sleeper.sleep(Duration.ofDays(1));
 	}
 
 	@Test
